@@ -57,6 +57,8 @@
   }
   .pill-btn:hover{transform:translateY(-1px);background:var(--surface-2)}
   .pill-btn .ic{font-size:1rem}
+  .fs-btn{width:40px;height:40px;border-radius:11px;background:var(--surface);border:1px solid var(--line);font-size:1rem;display:flex;align-items:center;justify-content:center;transition:.15s;flex:none}
+  .fs-btn:hover{background:var(--surface-2)}
 
   .progress-mini{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted);font-weight:600}
   .progress-mini .track{width:120px;height:7px;border-radius:999px;background:rgba(255,244,230,.12);overflow:hidden}
@@ -305,6 +307,7 @@
   <button class="pill-btn" id="scoreBtn" style="display:none" aria-label="Buka papan skor">
     <span class="ic">🏆</span><span id="scoreBtnLabel">Papan Skor</span>
   </button>
+  <button class="fs-btn" id="fsBtn" aria-label="Layar penuh" title="Layar penuh">⛶</button>
 </div>
 
 <!-- HOME -->
@@ -993,6 +996,18 @@ el('resetBtn').addEventListener('click', ()=> startTimer(state.timeLimit));
 el('muteBtn').addEventListener('click', ()=>{
   muted=!muted;
   el('muteBtn').textContent = muted ? '🔇' : '🔊';
+});
+
+// ---------- FULLSCREEN ----------
+const fsBtn = el('fsBtn');
+fsBtn.addEventListener('click', ()=>{
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); }
+  else{ document.exitFullscreen?.(); }
+});
+document.addEventListener('fullscreenchange', ()=>{
+  fsBtn.textContent = document.fullscreenElement ? '⛶' : '⛶';
+  fsBtn.title = document.fullscreenElement ? 'Keluar layar penuh' : 'Layar penuh';
+  fsBtn.setAttribute('aria-label', fsBtn.title);
 });
 
 // ---------- KEYBOARD ----------
